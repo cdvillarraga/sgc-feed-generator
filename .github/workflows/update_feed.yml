@@ -1,0 +1,33 @@
+name: Actualizar Feed GMC Diario
+
+on:
+  schedule:
+    # Corre todos los días a las 08:00 UTC (3:00 AM hora Bogotá/CDMX)
+    - cron: '0 8 * * *' 
+  workflow_dispatch: # Esto activa el botón para correrlo manualmente
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Correr el generador de feed
+        run: python main.py
+
+      - name: Subir el nuevo XML al repositorio
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add gmc_feed_sgc.xml
+          git commit -m "Actualización automática del feed XML" || echo "No hay cambios para subir"
+          git push
