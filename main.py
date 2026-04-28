@@ -11,8 +11,11 @@ MAX_WORKERS = 5
 MAX_RETRIES = 3
 INPUT_FILE = "urls.csv"  # El archivo que subirás a GitHub
 OUTPUT_FILE = "gmc_feed_sgc.xml"
+
+# Se añadió el custom header para el bypass de Cloudflare WAF
 HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'x-sgc-bot-access': 'SGC_AutoFeed_2024!'
 }
 
 FORBIDDEN_KEYWORDS = [
